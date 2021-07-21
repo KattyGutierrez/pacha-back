@@ -1,0 +1,143 @@
+package com.pacha.Pacha.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.sql.Blob;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
+public class Producto implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(length = 30)
+	private String nombre;
+	
+	@Column(length = 30)
+	private String marca;
+	
+	@Column
+	private Float precio;
+	
+	@Column
+	private Long puntuacion;
+	
+	@Column(length = 30)
+	private String imagen;
+	
+	@Column()
+	private Blob imagen_blob;
+	
+	@Column()
+	private String imagen_ruta;
+	
+	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idNegocio", referencedColumnName = "id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Negocio negocio;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idCategoria", referencedColumnName = "id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Categoria categoria;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public Float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Float precio) {
+		this.precio = precio;
+	}
+
+	public Long getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(Long puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public Negocio getNegocio() {
+		return negocio;
+	}
+
+	public void setNegocio(Negocio negocio) {
+		this.negocio = negocio;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	public Blob getImagen_blob() {
+		return imagen_blob;
+	}
+
+	public void setImagen_blob(Blob imagen_blob) {
+		this.imagen_blob = imagen_blob;
+	}
+
+	public String getImagen_ruta() {
+		return imagen_ruta;
+	}
+
+	public void setImagen_ruta(String imagen_ruta) {
+		this.imagen_ruta = imagen_ruta;
+	}
+	
+	
+	
+	
+}
