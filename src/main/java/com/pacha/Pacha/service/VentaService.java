@@ -28,7 +28,7 @@ public class VentaService {
 	@Autowired
 	DetalleVPRepository repoDetalle;
 
-	
+	@Transactional
 	public Iterable<DetalleVP> registrarVenta(VentaBean vb) {
 
 		try {
