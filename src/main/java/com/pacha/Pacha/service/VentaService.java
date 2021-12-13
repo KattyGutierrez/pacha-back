@@ -71,7 +71,8 @@ public class VentaService {
 		for (Iterator<DetalleVP> iterator = detalle.iterator(); iterator.hasNext();) {
 			DetalleVP dt = iterator.next();
 			ItemMPBean itemmp=new ItemMPBean();
-			itemmp.setCategory_id(""+dt.getProducto().getCategoria());
+			itemmp.setCategory_id(""+dt.getProducto().getCategoria().getNombre());
+			itemmp.setUnit_price(dt.getProducto().getPrecio());
 			itemmp.setCurrency_id("PEN");
 			itemmp.setQuantity(dt.getCantidad());
 			itemmp.setTitle(dt.getProducto().getNombre());
@@ -84,6 +85,9 @@ public class VentaService {
 	public RequestMPBean getRequestMercadoPago(Long id) {
 		RequestMPBean rq=new RequestMPBean();
 		PayerMPBean payerMP = new PayerMPBean();
+		Venta v= repoVenta.findById(id).get();
+		payerMP.setName(v.getComprador().getFirstName()+" "+v.getComprador().getLastName());
+		payerMP.setEmail(v.getComprador().getEmail());
 		rq.setAdditional_info("Informacion Adicional");
 		rq.setDescription("Descripcion Pago");
 		rq.setExternal_reference(id);

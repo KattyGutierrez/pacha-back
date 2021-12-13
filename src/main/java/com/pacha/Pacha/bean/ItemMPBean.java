@@ -5,7 +5,7 @@ public class ItemMPBean {
 	private String title;
 	private long quantity;
 	private String currency_id;
-	private long unit_price;
+	private double unit_price;
 	private String category_id;
 	public String getId() {
 		return id;
@@ -31,10 +31,10 @@ public class ItemMPBean {
 	public void setCurrency_id(String currency_id) {
 		this.currency_id = currency_id;
 	}
-	public long getUnit_price() {
+	public double getUnit_price() {
 		return unit_price;
 	}
-	public void setUnit_price(long unit_price) {
+	public void setUnit_price(double unit_price) {
 		this.unit_price = unit_price;
 	}
 	public String getCategory_id() {
