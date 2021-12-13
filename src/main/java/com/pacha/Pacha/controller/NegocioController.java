@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,12 @@ import com.pacha.Pacha.bean.CompradorBean;
 import com.pacha.Pacha.bean.FotoBean;
 import com.pacha.Pacha.bean.NegocioBean;
 import com.pacha.Pacha.bean.ProductoBean;
+import com.pacha.Pacha.bean.RequestMPBean;
 import com.pacha.Pacha.bean.UsuarioBean;
+import com.pacha.Pacha.bean.VentaBean;
 import com.pacha.Pacha.entity.Categoria;
 import com.pacha.Pacha.entity.Comprador;
+import com.pacha.Pacha.entity.DetalleVP;
 import com.pacha.Pacha.entity.Negocio;
 import com.pacha.Pacha.entity.Producto;
 import com.pacha.Pacha.entity.TipoNegocio;
@@ -31,6 +36,7 @@ import com.pacha.Pacha.service.NegocioService;
 import com.pacha.Pacha.service.ProductoService;
 import com.pacha.Pacha.service.TipoNegocioService;
 import com.pacha.Pacha.service.UsuarioService;
+import com.pacha.Pacha.service.VentaService;
 
 
 @RestController
@@ -54,6 +60,9 @@ public class NegocioController {
 	
 	@Autowired
 	CompradorService coService;
+	
+	@Autowired
+	VentaService vService;
 	
 	@GetMapping({"/tipoNegocio"})
 	public Iterable<TipoNegocio> consultaTipoNegocio() {
@@ -133,6 +142,17 @@ public class NegocioController {
 	@GetMapping("/downloadFotoProducto/{id_producto}")
 	public FotoBean downloadFotoProducto(@PathVariable Long id_producto) throws SQLException {
 		return pService.downloadFoto(id_producto);
+	}
+	
+	@PostMapping({ "/prueba/pregistrarVenta" })
+	public ResponseEntity<Iterable<DetalleVP>> registrarVenta(@RequestBody VentaBean vb) {
+		Iterable<DetalleVP> list = vService.registrarVenta(vb);
+		return list != null ? ResponseEntity.status(HttpStatus.CREATED).body(list)
+				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	}
+	@GetMapping({"/prueba/mercadopago/{id}"})
+	public RequestMPBean getRequestMercadoPago(@PathVariable Long id){
+		return vService.getRequestMercadoPago(id);
 	}
 	
 }
