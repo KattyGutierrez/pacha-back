@@ -1,10 +1,11 @@
 package com.pacha.Pacha.bean;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+
 
 public class VentaBean {
 	private Long id_comprador;
-	private List<DetalleVPBean> productos;
+	private LinkedHashSet<DetalleVPBean> productos;
 	
 	
 	public Long getId_comprador() {
@@ -13,10 +14,10 @@ public class VentaBean {
 	public void setId_comprador(Long id_comprador) {
 		this.id_comprador = id_comprador;
 	}
-	public List<DetalleVPBean> getProductos() {
+	public LinkedHashSet<DetalleVPBean> getProductos() {
 		return productos;
 	}
-	public void setProductos(List<DetalleVPBean> productos) {
+	public void setProductos(LinkedHashSet<DetalleVPBean> productos) {
 		this.productos = productos;
 	}
 	

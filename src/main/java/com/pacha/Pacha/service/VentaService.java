@@ -1,10 +1,17 @@
 package com.pacha.Pacha.service;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pacha.Pacha.bean.DetalleVPBean;
+import com.pacha.Pacha.bean.ItemMPBean;
+import com.pacha.Pacha.bean.PayerMPBean;
+import com.pacha.Pacha.bean.RequestMPBean;
 import com.pacha.Pacha.bean.VentaBean;
 import com.pacha.Pacha.entity.DetalleVP;
 import com.pacha.Pacha.entity.Venta;
@@ -53,6 +60,36 @@ public class VentaService {
 			return null;
 		}
 
+	}
+	
+	public Iterable<DetalleVP> getDetallesVenta(Long id){
+		Venta v= repoVenta.findById(id).get();
+		return repoDetalle.findAllByVenta(v);
+	}
+	public Iterable<ItemMPBean> getItemMPBeans(Iterable<DetalleVP> detalle){
+		LinkedHashSet<ItemMPBean> listItems= new LinkedHashSet<>();
+		for (Iterator<DetalleVP> iterator = detalle.iterator(); iterator.hasNext();) {
+			DetalleVP dt = iterator.next();
+			ItemMPBean itemmp=new ItemMPBean();
+			itemmp.setCategory_id(""+dt.getProducto().getCategoria());
+			itemmp.setCurrency_id("PEN");
+			itemmp.setQuantity(dt.getCantidad());
+			itemmp.setTitle(dt.getProducto().getNombre());
+			itemmp.setId(""+dt.getProducto().getId());
+			listItems.add(itemmp);
+		}
+		return listItems;
+		
+	}
+	public RequestMPBean getRequestMercadoPago(Long id) {
+		RequestMPBean rq=new RequestMPBean();
+		PayerMPBean payerMP = new PayerMPBean();
+		rq.setAdditional_info("Informacion Adicional");
+		rq.setDescription("Descripcion Pago");
+		rq.setExternal_reference(id);
+		rq.setPayer(payerMP);
+		rq.setProductos((LinkedHashSet<ItemMPBean>) getItemMPBeans(this.getDetallesVenta(id)));
+		return rq;
 	}
 
 }
