@@ -144,7 +144,7 @@ public class NegocioController {
 		return pService.downloadFoto(id_producto);
 	}
 	
-	@PostMapping({ "/pregistrarVenta" })
+	@PostMapping({ "/registrarVenta" })
 	public ResponseEntity<Iterable<DetalleVP>> registrarVenta(@RequestBody VentaBean vb) {
 		Iterable<DetalleVP> list = vService.registrarVenta(vb);
 		return list != null ? ResponseEntity.status(HttpStatus.CREATED).body(list)

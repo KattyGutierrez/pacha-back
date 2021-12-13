@@ -2,7 +2,9 @@ package com.pacha.Pacha.bean;
 
 import java.util.LinkedHashSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestMPBean {
 	private String description;
 	private long external_reference;

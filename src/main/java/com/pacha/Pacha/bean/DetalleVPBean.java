@@ -1,5 +1,8 @@
 package com.pacha.Pacha.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DetalleVPBean {
 	private Long id_producto;
 	private Long cantidad;

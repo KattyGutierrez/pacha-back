@@ -22,7 +22,7 @@ public class VentaController {
 	@Autowired
 	VentaService vService;
 
-	@PostMapping({ "/prueba/pregistrarVenta" })
+	@PostMapping({ "/prueba/registrarVenta" })
 	public ResponseEntity<Iterable<DetalleVP>> registrarVenta(@RequestBody VentaBean vb) {
 		Iterable<DetalleVP> list = vService.registrarVenta(vb);
 		return list != null ? ResponseEntity.status(HttpStatus.CREATED).body(list)
