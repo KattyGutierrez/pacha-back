@@ -28,6 +28,10 @@ public class VentaController {
 		return list != null ? ResponseEntity.status(HttpStatus.CREATED).body(list)
 				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
+	@GetMapping({"/venta/{id}"})
+	public Iterable<DetalleVP> getDetallesVenta(@PathVariable Long id){
+		return vService.getDetallesVenta(id);
+	}
 	@GetMapping({"/mercadopago/{id}"})
 	public RequestMPBean getRequestMercadoPago(@PathVariable Long id){
 		return vService.getRequestMercadoPago(id);
