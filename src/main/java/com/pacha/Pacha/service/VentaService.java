@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pacha.Pacha.bean.BackUrlsMPBean;
 import com.pacha.Pacha.bean.DetalleVPBean;
 import com.pacha.Pacha.bean.ItemMPBean;
 import com.pacha.Pacha.bean.PayerMPBean;
@@ -36,7 +37,7 @@ public class VentaService {
 	DetalleVPRepository repoDetalle;
 
 	@Transactional
-	public Iterable<DetalleVP> registrarVenta(VentaBean vb) {
+	public RequestMPBean registrarVenta(VentaBean vb) {
 
 		try {
 			Venta v = new Venta();
@@ -54,8 +55,8 @@ public class VentaService {
 					repoDetalle.save(d);
 				}
 			}
-	
-			return repoDetalle.findAllByVenta(v);
+			return getRequestMercadoPago(v.getId());
+			//return repoDetalle.findAllByVenta(v);
 		} catch(Exception e) {
 			return null;
 		}
@@ -85,6 +86,7 @@ public class VentaService {
 	public RequestMPBean getRequestMercadoPago(Long id) {
 		RequestMPBean rq=new RequestMPBean();
 		PayerMPBean payerMP = new PayerMPBean();
+		BackUrlsMPBean backurls= new BackUrlsMPBean("http://localhost:4200/principal/negocios","","");
 		Venta v= repoVenta.findById(id).get();
 		payerMP.setName(v.getComprador().getFirstName()+" "+v.getComprador().getLastName());
 		payerMP.setEmail(v.getComprador().getEmail());
@@ -92,7 +94,8 @@ public class VentaService {
 		rq.setDescription("Descripcion Pago");
 		rq.setExternal_reference(id);
 		rq.setPayer(payerMP);
-		rq.setProductos((LinkedHashSet<ItemMPBean>) getItemMPBeans(this.getDetallesVenta(id)));
+		rq.setItems((LinkedHashSet<ItemMPBean>) getItemMPBeans(this.getDetallesVenta(id)));
+		rq.setBack_urls( backurls);
 		return rq;
 	}
 

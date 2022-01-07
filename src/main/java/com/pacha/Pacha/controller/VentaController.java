@@ -23,8 +23,8 @@ public class VentaController {
 	VentaService vService;
 
 	@PostMapping({ "/registrarVenta" })
-	public ResponseEntity<Iterable<DetalleVP>> registrarVenta(@RequestBody VentaBean vb) {
-		Iterable<DetalleVP> list = vService.registrarVenta(vb);
+	public ResponseEntity<RequestMPBean> registrarVenta(@RequestBody VentaBean vb) {
+		RequestMPBean list = vService.registrarVenta(vb);
 		return list != null ? ResponseEntity.status(HttpStatus.CREATED).body(list)
 				: ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}

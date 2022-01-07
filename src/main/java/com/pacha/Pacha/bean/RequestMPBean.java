@@ -12,7 +12,9 @@ public class RequestMPBean {
 	private String additional_info;
 	private PayerMPBean payer;
 	private double transaction_amount;
-	public String getDescription() {
+	private BackUrlsMPBean back_urls;
+	
+	public  String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
@@ -27,7 +29,7 @@ public class RequestMPBean {
 	public LinkedHashSet<ItemMPBean> getItems() {
 		return items;
 	}
-	public void setProductos(LinkedHashSet<ItemMPBean> items) {
+	public void setItems(LinkedHashSet<ItemMPBean> items) {
 		this.items = items;
 	}
 	public String getAdditional_info() {
@@ -47,6 +49,12 @@ public class RequestMPBean {
 	}
 	public void setTransaction_amount(double transaction_amount) {
 		this.transaction_amount = transaction_amount;
+	}
+	public BackUrlsMPBean getBack_urls() {
+		return back_urls;
+	}
+	public void setBack_urls(BackUrlsMPBean back_urls) {
+		this.back_urls = back_urls;
 	}
 	
 	
